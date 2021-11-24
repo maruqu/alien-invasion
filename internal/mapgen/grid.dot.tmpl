@@ -1,0 +1,21 @@
+graph grid
+{
+
+splines=false; 
+layout=dot
+
+node [shape=oval, style=filled, fixedsize=true, width=1.4, height=1.2]
+
+edge [weight=1000 style=dashed color=dimgrey]
+edge [style=invis]
+
+{{ .hiddenNodes }}
+
+{{ .verticalEdges }}
+
+{{ .horizontalEdges }}
+
+{{ .roads }}
+
+{{ .labels }}
+}
