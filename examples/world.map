@@ -1,0 +1,12 @@
+Anvik south=Fabens east=Martinsburg
+Hatch south=Jacobson west=Martinsburg
+Keystone south=Pinson east=Steprock west=Fabens
+Steprock north=Martinsburg south=Clifton east=Jacobson west=Keystone
+Jacobson north=Hatch south=Talihina west=Steprock
+Martinsburg south=Steprock east=Hatch west=Anvik
+Fabens north=Anvik south=Hardtner east=Keystone
+Hardtner north=Fabens south=Amchitka east=Pinson
+Pinson north=Keystone east=Talihina west=Hardtner
+Talihina north=Jacobson west=Pinson
+Amchitka north=Hardtner east=Clifton
+Clifton north=Steprock west=Amchitka
