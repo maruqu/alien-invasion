@@ -19,10 +19,10 @@ var dotGraphTemplate string
 // Two internal representations are used to store information about city coordinates.
 type GridMap struct {
 	grid     [][]string
-	worldMap map[string]neighbours
+	worldMap map[string]neighbors
 }
 
-type neighbours struct {
+type neighbors struct {
 	north *city
 	south *city
 	east  *city
@@ -65,23 +65,23 @@ func NewGridMap(height, width, citiesCount int) (*GridMap, error) {
 func (gm *GridMap) String() string {
 	var sb strings.Builder
 
-	for city, neighbours := range gm.worldMap {
+	for city, neighbors := range gm.worldMap {
 		sb.WriteString(city)
 
-		if neighbours.north != nil {
-			sb.WriteString(fmt.Sprintf(" north=%s", neighbours.north.name))
+		if neighbors.north != nil {
+			sb.WriteString(fmt.Sprintf(" north=%s", neighbors.north.name))
 		}
 
-		if neighbours.south != nil {
-			sb.WriteString(fmt.Sprintf(" south=%s", neighbours.south.name))
+		if neighbors.south != nil {
+			sb.WriteString(fmt.Sprintf(" south=%s", neighbors.south.name))
 		}
 
-		if neighbours.east != nil {
-			sb.WriteString(fmt.Sprintf(" east=%s", neighbours.east.name))
+		if neighbors.east != nil {
+			sb.WriteString(fmt.Sprintf(" east=%s", neighbors.east.name))
 		}
 
-		if neighbours.west != nil {
-			sb.WriteString(fmt.Sprintf(" west=%s", neighbours.west.name))
+		if neighbors.west != nil {
+			sb.WriteString(fmt.Sprintf(" west=%s", neighbors.west.name))
 		}
 
 		sb.WriteString("\n")
@@ -139,26 +139,26 @@ func (gm *GridMap) DotGraph() (string, error) {
 	for i := 0; i < len(gm.grid); i++ {
 		for j := 0; j < len(gm.grid[0]); j++ {
 			if gm.grid[i][j] != "" {
-				neighbours := gm.worldMap[gm.grid[i][j]]
+				neighbors := gm.worldMap[gm.grid[i][j]]
 
-				if neighbours.north != nil {
-					if _, ok := connectedCities[neighbours.north.name]; !ok {
-						sb.WriteString(fmt.Sprintf("N%d_%d -- N%d_%d [style=solid]\n", i, j, neighbours.north.coordinates[0], neighbours.north.coordinates[1]))
+				if neighbors.north != nil {
+					if _, ok := connectedCities[neighbors.north.name]; !ok {
+						sb.WriteString(fmt.Sprintf("N%d_%d -- N%d_%d [style=solid]\n", i, j, neighbors.north.coordinates[0], neighbors.north.coordinates[1]))
 					}
 				}
-				if neighbours.south != nil {
-					if _, ok := connectedCities[neighbours.south.name]; !ok {
-						sb.WriteString(fmt.Sprintf("N%d_%d -- N%d_%d [style=solid]\n", i, j, neighbours.south.coordinates[0], neighbours.south.coordinates[1]))
+				if neighbors.south != nil {
+					if _, ok := connectedCities[neighbors.south.name]; !ok {
+						sb.WriteString(fmt.Sprintf("N%d_%d -- N%d_%d [style=solid]\n", i, j, neighbors.south.coordinates[0], neighbors.south.coordinates[1]))
 					}
 				}
-				if neighbours.east != nil {
-					if _, ok := connectedCities[neighbours.east.name]; !ok {
-						sb.WriteString(fmt.Sprintf("N%d_%d -- N%d_%d [style=solid]\n", i, j, neighbours.east.coordinates[0], neighbours.east.coordinates[1]))
+				if neighbors.east != nil {
+					if _, ok := connectedCities[neighbors.east.name]; !ok {
+						sb.WriteString(fmt.Sprintf("N%d_%d -- N%d_%d [style=solid]\n", i, j, neighbors.east.coordinates[0], neighbors.east.coordinates[1]))
 					}
 				}
-				if neighbours.west != nil {
-					if _, ok := connectedCities[neighbours.west.name]; !ok {
-						sb.WriteString(fmt.Sprintf("N%d_%d -- N%d_%d [style=solid]\n", i, j, neighbours.west.coordinates[0], neighbours.west.coordinates[1]))
+				if neighbors.west != nil {
+					if _, ok := connectedCities[neighbors.west.name]; !ok {
+						sb.WriteString(fmt.Sprintf("N%d_%d -- N%d_%d [style=solid]\n", i, j, neighbors.west.coordinates[0], neighbors.west.coordinates[1]))
 					}
 				}
 
@@ -240,16 +240,16 @@ func generateGrid(height, width, citiesCount int) ([][]string, error) {
 	return grid, nil
 }
 
-// generateWorldMap creates a mapping of city names to its neighbours based on the provided grid.
-func generateWorldMap(grid [][]string) map[string]neighbours {
-	worldMap := make(map[string]neighbours)
+// generateWorldMap creates a mapping of city names to its neighbors based on the provided grid.
+func generateWorldMap(grid [][]string) map[string]neighbors {
+	worldMap := make(map[string]neighbors)
 
 	// get all possible roads from each city
 	for h := 0; h < len(grid); h++ {
 		for w := 0; w < len(grid[0]); w++ {
 			if grid[h][w] != "" {
-				neighbours := findNeighbours(h, w, grid)
-				worldMap[grid[h][w]] = neighbours
+				neighbors := findNeighbors(h, w, grid)
+				worldMap[grid[h][w]] = neighbors
 			}
 		}
 	}
@@ -273,9 +273,9 @@ func getCityNames(count int) ([]string, error) {
 	return result, nil
 }
 
-// findNeighbours finds closest cities in the same row or column of the grid.
-func findNeighbours(h, w int, grid [][]string) neighbours {
-	result := neighbours{}
+// findNeighbors finds closest cities in the same row or column of the grid.
+func findNeighbors(h, w int, grid [][]string) neighbors {
+	result := neighbors{}
 
 	// north
 	for i := h - 1; i >= 0; i-- {

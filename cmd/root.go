@@ -5,7 +5,7 @@ import "github.com/spf13/cobra"
 var (
 	rootCmd = &cobra.Command{
 		Use:   "alien-invasion",
-		Short: "Alien invasion siulation util",
+		Short: "Alien invasion simulation util",
 	}
 )
 
